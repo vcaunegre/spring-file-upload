@@ -1,0 +1,46 @@
+<head th:insert="fragments/head.html"></head>
+
+<body>
+    <div th:if="${success}" class="text-center">
+        <h2 th:if="${success==true}" class="text-success">File uploaded successfully!</h2>
+        <h2 th:if="${success==false}" class="text-danger"> Error, file too big</h2>
+    </div>
+    <div class="container w-75 text-center p-5">
+        <div class="d-flex align-items-center">
+
+            <form method="post" th:action="@{/upload}" class="d-flex flex-row align-items-center "
+                enctype="multipart/form-data">
+                <div class="form-group ">
+                    <input type="file" name="file" class="form-control form-control-lg">
+                </div>
+                <button type="submit" class="btn btn-primary align-self-center p-2 ms-2">Upload File</button>
+            </form>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Url</th>
+                    <th scope="col">Content Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each=" file, iter: ${listFiles}">
+                    <th scope="row" th:text="${iter.index}"></th>
+                    <td th:text="${file.id}"></td>
+                    <td th:text="${file.name}">Mark</td>
+                    <td th:text="${file.size/1000}">Otto</td>
+                    <td th:text="${file.url}">@mdo</td>
+                    <td th:text="${file.contentType}"></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
