@@ -36,4 +36,10 @@ public class FileService {
         return fileRepository.findAll();
     }
 
+    public void deleteFile(String id) {
+        if (fileRepository.existsById(id)) {
+            fileRepository.deleteById(id);
+        }
+    }
+
 }
