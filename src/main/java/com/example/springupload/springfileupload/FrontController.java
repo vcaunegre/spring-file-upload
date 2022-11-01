@@ -1,6 +1,7 @@
 package com.example.springupload.springfileupload;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Controller
 public class FrontController {
@@ -53,5 +55,30 @@ public class FrontController {
     public String delete(@PathVariable(name = "id") String fileId) {
         fileService.deleteFile(fileId);
         return "redirect:/";
+    }
+
+    @GetMapping("/{id}")
+    public String details(Model model, @PathVariable(name = "id") String id) {
+        Optional<FileEntity> fOptional = fileService.getFile(id);
+
+        if (!fOptional.isPresent()) {
+            return "redirect:/";
+        }
+
+        FileEntity fileEntity = fOptional.get();
+
+        String downloadURL = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/files/")
+                .path(fileEntity.getId())
+                .toUriString();
+        FileResponse fileResponse = new FileResponse();
+        fileResponse.setId(fileEntity.getId());
+        fileResponse.setName(fileEntity.getName());
+        fileResponse.setContentType(fileEntity.getContentType());
+        fileResponse.setSize(fileEntity.getSize());
+        fileResponse.setUrl(downloadURL);
+
+        model.addAttribute("file", fileResponse);
+        return "detail";
     }
 }

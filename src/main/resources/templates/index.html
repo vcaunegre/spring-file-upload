@@ -31,7 +31,9 @@
             <tbody>
                 <tr th:each=" file, iter: ${listFiles}">
                     <th scope="row" th:text="${iter.index}"></th>
-                    <td th:text="${file.id}"></td>
+                    <td>
+                        <a th:href="${file.id}" th:text="${file.id}"></a>
+                    </td>
                     <td th:text="${file.name}">Mark</td>
                     <td th:text="${file.size/1000}">Otto</td>
                     <td th:text="${file.url}">@mdo</td>
