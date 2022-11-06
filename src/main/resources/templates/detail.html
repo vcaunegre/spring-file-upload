@@ -1,5 +1,16 @@
 <head th:insert="fragments/head.html"></head>
 
 <body>
-    <h1 th:text="${file.name}"></h1>
+    <div class="container pt-5 text-center">
+
+        <h1 th:text="${file.name}"></h1>
+        <h2 th:text="${file.size}"></h2>
+        <a th:href="${file.url}" th:text="${file.url}"></a>
+    </div>
+
+    <div x-data="{ count: 0 }">
+        <button class="btn btn-primary" x-on:click="count++">Increment</button>
+
+        <span x-text="count"></span>
+    </div>
 </body>
